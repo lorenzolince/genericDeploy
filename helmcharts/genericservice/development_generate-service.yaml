@@ -52,7 +52,8 @@ tolerations: []
 
 affinity: {}
 
-MYSQL_HOST: database.sql.com:3306
+DB_HOST: database.sql.com
+DB_PORT: 3306
 SPRING_DIR_COMPILE: /app/compile
 MAVE_FILE: mvn
 API_JAVA_OPTION: Xmx2024m -Xss1024m -Dlogging.level.com.llh.securitye=DEBUG -Dlogging.level.org.springframework=ERROR
