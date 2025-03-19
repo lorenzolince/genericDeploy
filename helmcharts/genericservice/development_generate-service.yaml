@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.lopa.com/genericservice-dev
+  repository: registry.llince.com/generate-service-security
   tag: latest
 
 #imagePullSecrets:
@@ -26,7 +26,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: dev.genericservice.com
+    - host: genericservice.com
       paths:
         - /(.*)
 #  tls:
@@ -40,11 +40,11 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits:
-    cpu: 100m
-    memory: 512Mi
+    cpu: 1500m
+    memory: 2Gi
   requests:
-    cpu: 50m
-    memory: 256Mi
+    cpu: 150m
+    memory: 2Gi
 
 nodeSelector: {}
 
@@ -52,12 +52,12 @@ tolerations: []
 
 affinity: {}
 
-genericSeviceName: generic-sevice-license
-genericSeviceKey: keyLicense
-dabadaseSecretName: database-ora
-databasePassword: dbpassword
-databaseUser: dbusername
-databaseDriver: dbdriver
-databaseUrl: databaseUrl
-SQL_PRIVATE_IP: 192.168.1.117
+MYSQL_HOST: database.sql.com:3306
+SPRING_DIR_COMPILE: /app/compile
+MAVE_FILE: mvn
+API_JAVA_OPTION: Xmx2024m -Xss1024m -Dlogging.level.com.llh.securitye=DEBUG -Dlogging.level.org.springframework=ERROR
+DB_USER_NAME: sa
+DB_PASSWORD: llince123
+DB_DRIVER: com.mysql.cj.jdbc.Driver
+SQL_PRIVATE_IP: 192.168.0.108
 SQL_HOST: database.sql.com

@@ -23,34 +23,21 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8091
               protocol: TCP
           env:
             - name: "DB_USER_NAME"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.dabadaseSecretName }}
-                  key: {{ .Values.databaseUser }}
+              value: "{{ .Values.DB_USER_NAME }}"
             - name: "DB_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.dabadaseSecretName }}
-                  key: {{ .Values.databasePassword }}
-            - name: "VALID_LICENSE"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.genericSeviceName }}
-                  key: {{ .Values.genericSeviceKey }}
+              value: "{{ .Values.DB_PASSWORD }}"
             - name: "DB_DRIVER"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.dabadaseSecretName }}
-                  key: {{ .Values.databaseDriver }}
-            - name: "DB_URL"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.dabadaseSecretName }}
-                  key: {{ .Values.databaseUrl }}
+              value: "{{ .Values.DB_DRIVER }}"
+            - name: "MYSQL_HOST"
+              value: "{{ .Values.MYSQL_HOST }}"
+            - name: "SPRING_DIR_COMPILE"
+              value: "{{ .Values.SPRING_DIR_COMPILE }}"
+            - name: "MAVE_FILE"
+              value: "{{ .Values.MAVE_FILE }}"
                   
 
           resources:
