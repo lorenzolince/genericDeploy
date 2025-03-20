@@ -18,6 +18,10 @@ spec:
         - ip: "{{ .Values.SQL_PRIVATE_IP }}"
           hostnames:
           - "{{ .Values.SQL_HOST }}"
+      volumes:
+      - name: generateservice-mvn
+        persistentVolumeClaim:
+          claimName: "hostpath-generateservice" 
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -25,9 +29,12 @@ spec:
             - name: http
               containerPort: 8091
               protocol: TCP
+          volumeMounts:
+            - mountPath: "/app/.m2"
+              name: generateservice-mvn
           env:
             - name: "DB_USER_NAME"
-              value: "{{ .Values.DB_USER_NAME }}"
+              value: "{{ .Values.SPRING_DIR_COMPILE }}"
             - name: "DB_PASSWORD"
               value: "{{ .Values.DB_PASSWORD }}"
             - name: "DB_DRIVER"
