@@ -34,7 +34,7 @@ spec:
               name: generateservice-mvn
           env:
             - name: "DB_USER_NAME"
-              value: "{{ .Values.SPRING_DIR_COMPILE }}"
+              value: "{{ .Values.DB_USER_NAME }}"
             - name: "DB_PASSWORD"
               value: "{{ .Values.DB_PASSWORD }}"
             - name: "DB_DRIVER"
