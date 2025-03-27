@@ -7,6 +7,7 @@ replicaCount: 1
 image:
   repository: registry.llince.com/generate-service-security
   tag: latest
+  pullPolicy: Always
 
 #imagePullSecrets:
   #- name : loparegistry
