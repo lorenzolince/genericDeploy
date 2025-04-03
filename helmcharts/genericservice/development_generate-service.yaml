@@ -61,5 +61,5 @@ API_JAVA_OPTION: Xmx2024m -Xss1024m -Dlogging.level.com.llh.securitye=DEBUG -Dlo
 DB_USER_NAME: sa
 DB_PASSWORD: llince123
 DB_DRIVER: com.mysql.cj.jdbc.Driver
-SQL_PRIVATE_IP: 192.168.0.108
+SQL_PRIVATE_IP: 192.168.0.212
 SQL_HOST: database.sql.com
