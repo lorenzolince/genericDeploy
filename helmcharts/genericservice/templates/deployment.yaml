@@ -58,8 +58,8 @@ spec:
               value: "{{ .Values.PATH_JKS }}"
             - name: "UPDATE_TABLES"
               value: "{{ .Values.UPDATE_TABLES }}"
-            - name: "API_JAVA_OPTION"
-              value: "{{ .Values.API_JAVA_OPTION }}"
+            #- name: "API_JAVA_OPTION"
+            #  value: "{{ .Values.API_JAVA_OPTION }}"
                   
 
           resources:
