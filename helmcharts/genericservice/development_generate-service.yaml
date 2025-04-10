@@ -63,3 +63,5 @@ DB_PASSWORD: llince123
 DB_DRIVER: com.mysql.cj.jdbc.Driver
 SQL_PRIVATE_IP: 192.168.0.212
 SQL_HOST: database.sql.com
+PATH_JKS: /app/jks/llince.jks
+UPDATE_TABLES: none

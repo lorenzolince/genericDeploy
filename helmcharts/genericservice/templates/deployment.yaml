@@ -22,6 +22,9 @@ spec:
       - name: generateservice-mvn
         persistentVolumeClaim:
           claimName: "hostpath-generateservice" 
+      - name: generateservice-jks
+        persistentVolumeClaim:
+          claimName: "hostpath-generateservice-jks" 
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -33,6 +36,9 @@ spec:
           volumeMounts:
             - mountPath: "/app/.m2"
               name: generateservice-mvn
+          volumeMounts:
+            - mountPath: "/app/jks"
+              name: generateservice-jks
           env:
             - name: "DB_USER_NAME"
               value: "{{ .Values.DB_USER_NAME }}"
@@ -48,6 +54,12 @@ spec:
               value: "{{ .Values.SPRING_DIR_COMPILE }}"
             - name: "MAVE_FILE"
               value: "{{ .Values.MAVE_FILE }}"
+            - name: "PATH_JKS"
+              value: "{{ .Values.PATH_JKS }}"
+            - name: "UPDATE_TABLES"
+              value: "{{ .Values.UPDATE_TABLES }}"
+            - name: "API_JAVA_OPTION"
+              value: "{{ .Values.API_JAVA_OPTION }}"
                   
 
           resources:
