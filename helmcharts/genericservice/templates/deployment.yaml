@@ -36,7 +36,6 @@ spec:
           volumeMounts:
             - mountPath: "/app/.m2"
               name: generateservice-mvn
-          volumeMounts:
             - mountPath: "/app/jks"
               name: generateservice-jks
           env:
