@@ -27,7 +27,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: genericservice.com
+    - host: aca.demo.service.com
       paths:
         - /(.*)
 #  tls:
