@@ -29,7 +29,8 @@ ingress:
   hosts:
     - host: genericservice.com
       paths:
-        - /(.*)
+        - /
+      pathType: Prefix
 #  tls:
 #    - secretName: my-tls-cert
 #      hosts:
