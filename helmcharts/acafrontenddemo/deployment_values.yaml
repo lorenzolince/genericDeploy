@@ -10,22 +10,12 @@ nameOverride: ""
 fullnameOverride: ""
 
 service:
-  type: ClusterIP
-  port: 80
+  type: LoadBalancer
+  port: 8084
   
 ingress:
-  enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/x-forwarded-proto: "http"
+  enabled: false
 
-  hosts:
-    - host: aca.demo.front.com
-      paths:
-        - /(.*)
 
 resources:
 
