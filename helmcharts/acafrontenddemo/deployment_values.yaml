@@ -19,13 +19,19 @@ ingress:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/x-forwarded-proto: "http"
+    nginx.ingress.kubernetes.io/use-regex: "false"
 
   hosts:
-    - host: aca.demo.front.com
+    - host: front.aca.com
       paths:
         - /(.*)
+
+controller:
+  config:
+    sslRedirect: "false"
+    forceSslRedirect: "false"
+    useForwardedHeaders: "false"
+
 
 resources:
 
@@ -42,8 +48,8 @@ tolerations: []
 
 affinity: {}
 
-NODE_ENV: "production"
-NEXTAUTH_URL: https://acawb.lincetechnology.net
+NODE_ENV: test
+NEXTAUTH_URL: http://front.aca.com:8080
 NEXTAUTH_SECRET: emFxJG1rbzEy
 AUTH_ENABLED: true
 API_ENDPOINT_JAVA: http://academoservice/api
