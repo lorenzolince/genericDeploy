@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.llince.com/aca-front-demo
+  repository: registry.llince.com/aca-backend-demo
   tag: latest
   pullPolicy: Always
 
