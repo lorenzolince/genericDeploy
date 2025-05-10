@@ -1,7 +1,12 @@
 # Default values for mytestchart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
+controller:
+  config:
+    enable-snippet-directives: "true"  # 🚀 Permitir snippets en Ingress-Nginx
+  extraArgs:
+    - "--enable-snippet-directives=true"
+    
 replicaCount: 1
 
 image:
