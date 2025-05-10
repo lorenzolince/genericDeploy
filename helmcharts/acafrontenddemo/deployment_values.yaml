@@ -29,8 +29,7 @@ ingress:
   hosts:
     - host: aca.demo.front.com
       paths:
-        - /
-      pathType: Prefix
+        - /(.*)
 #  tls:
 #    - secretName: my-tls-cert
 #      hosts:
