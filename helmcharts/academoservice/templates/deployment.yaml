@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "academoservice.fullname" . }}
+  labels:
+    {{- include "academoservice.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "academoservice.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: academoservice
+        {{- include "academoservice.selectorLabels" . | nindent 8 }}
+    spec:
+      hostAliases:
+        - ip: "{{ .Values.SQL_PRIVATE_IP }}"
+          hostnames:
+          - "{{ .Values.SQL_HOST }}"
+      volumes:
+      - name: academoservice-logs
+        persistentVolumeClaim:
+          claimName: "hostpath-aca-demo-logs" 
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: "/app/logs"
+              name: academoservice-logs
+          env:
+            - name: "DB_URL"
+              value: "{{ .Values.DB_URL }}"
+            - name: "CIPHER_SECRET_KEY"
+              value: "{{ .Values.CIPHER_SECRET_KEY }}"
+            - name: "API_JAVA_OPTION"
+              value: "{{ .Values.API_JAVA_OPTION }}"
+            - name: "LIQUIBASE_RUN"
+              value: "{{ .Values.LIQUIBASE_RUN }}"             
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}        

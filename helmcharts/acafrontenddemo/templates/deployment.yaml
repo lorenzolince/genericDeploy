@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "acafrontenddemo.fullname" . }}
+  labels:
+    {{- include "acafrontenddemo.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "acafrontenddemo.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: acafrontenddemo
+        {{- include "acafrontenddemo.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 3030
+              protocol: TCP
+          env:
+            - name: "NODE_ENV"
+              value: "{{ .Values.NODE_ENV }}"
+            - name: "NEXTAUTH_URL"
+              value: "{{ .Values.NEXTAUTH_URL }}"
+            - name: "NEXTAUTH_SECRET"
+              value: "{{ .Values.NEXTAUTH_SECRET }}"
+            - name: "AUTH_ENABLED"
+              value: "{{ .Values.AUTH_ENABLED }}"
+            - name: "API_ENDPOINT_JAVA"
+              value: "{{ .Values.API_ENDPOINT_JAVA }}"
+            - name: "JWT_SECRET"
+              value: "{{ .Values.JWT_SECRET }}"
+            - name: "AUTH_DEGUG"
+              value: "{{ .Values.AUTH_DEGUG }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
