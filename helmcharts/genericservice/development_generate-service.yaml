@@ -57,7 +57,7 @@ DB_HOST: database.sql.com
 DB_PORT: 6033
 SPRING_DIR_COMPILE: /app/compile
 MAVE_FILE: mvn
-API_JAVA_OPTION: -Xss512k -Xms1g -Xmx3g #-Dlogging.level.com.llh.securitye=DEBUG -Dlogging.level.org.springframework=ERROR
+API_JAVA_OPTION: -Xss512k -Xms1g -Xmx3g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 #-Dlogging.level.com.llh.securitye=DEBUG -Dlogging.level.org.springframework=ERROR
 DB_USER_NAME: sa
 DB_PASSWORD: llince123
 DB_DRIVER: com.mysql.cj.jdbc.Driver

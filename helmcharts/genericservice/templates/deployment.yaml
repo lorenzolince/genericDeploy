@@ -25,6 +25,10 @@ spec:
       - name: generateservice-jks
         persistentVolumeClaim:
           claimName: "hostpath-generateservice-jks" 
+      - name: compile-ram
+        emptyDir:
+          medium: Memory 
+          sizeLimit: 2Gi  
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -38,6 +42,8 @@ spec:
               name: generateservice-mvn
             - mountPath: "/app/jks"
               name: generateservice-jks
+            - mountPath: "/app/compile"
+              name: compile-ram
           env:
             - name: "DB_USER_NAME"
               value: "{{ .Values.DB_USER_NAME }}"
