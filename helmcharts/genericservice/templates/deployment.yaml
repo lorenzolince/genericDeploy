@@ -73,6 +73,8 @@ spec:
               value: "{{ .Values.SQL_HOST }}"
             - name: "NEXTAUTH_URL"
               value: "{{ .Values.NEXTAUTH_URL }}" 
+            - name: "LIQUIBASE_RUN"
+              value: "{{ .Values.LIQUIBASE_RUN }}" 
             #- name: "API_JAVA_OPTION"
             #  value: "{{ .Values.API_JAVA_OPTION }}"
                   
