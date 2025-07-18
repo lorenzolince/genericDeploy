@@ -50,7 +50,7 @@ affinity: {}
 
 NODE_ENV: production
 API_ENDPOINT: http://generatebackend-genericservice
-NEXTAUTH_URL: https://generate-service.com:8080
+NEXTAUTH_URL: https://generate-service.com
 LoginSecret_Name: cloud-login
 LoginSecretGoogleId_Id: G_CLIENT_ID
 LoginSecretGoogleId_Secret: G_CLIENT_SECRET
