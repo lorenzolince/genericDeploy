@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "genericserviceui.fullname" . }}
+  labels:
+    app: genericserviceui
+    {{- include "genericserviceui.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "genericserviceui.selectorLabels" . | nindent 4 }}

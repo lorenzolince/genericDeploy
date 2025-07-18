@@ -21,10 +21,7 @@ spec:
       volumes:
       - name: generateservice-mvn
         persistentVolumeClaim:
-          claimName: "hostpath-generateservice" 
-      - name: generateservice-jks
-        persistentVolumeClaim:
-          claimName: "hostpath-generateservice-jks" 
+          claimName: "hostpath-generateservice-m2" 
       - name: compile-ram
         emptyDir:
           medium: Memory 
@@ -35,34 +32,47 @@ spec:
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
             - name: http
-              containerPort: 8091
+              containerPort: 80
               protocol: TCP
+          {{- if .Values.volumes.enabled }}
           volumeMounts:
             - mountPath: "/app/.m2"
               name: generateservice-mvn
-            - mountPath: "/app/jks"
-              name: generateservice-jks
             - mountPath: "/app/compile"
               name: compile-ram
+          {{- end }}   
           env:
-            - name: "DB_USER_NAME"
-              value: "{{ .Values.DB_USER_NAME }}"
-            - name: "DB_PASSWORD"
-              value: "{{ .Values.DB_PASSWORD }}"
-            - name: "DB_DRIVER"
-              value: "{{ .Values.DB_DRIVER }}"
-            - name: "DB_HOST"
-              value: "{{ .Values.DB_HOST }}"
-            - name: "DB_PORT"
-              value: "{{ .Values.DB_PORT }}"
-            - name: "SPRING_DIR_COMPILE"
-              value: "{{ .Values.SPRING_DIR_COMPILE }}"
+            - name: "DB_URL"
+              value: "{{ .Values.DB_URL }}"
+            - name: "SFTP_HOST"
+              value: "{{ .Values.SFTP_HOST }}"
+            - name: "SFTP_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginSecretSftp_Key }}
+            - name: "SFTP_USERNAME"
+              value: "{{ .Values.SFTP_USERNAME }}"
+            - name: "SFTP_REMOTE_PATH"
+              value: "{{ .Values.SFTP_REMOTE_PATH }}"
+            - name: "SFTP_DELAY"
+              value: "{{ .Values.SFTP_DELAY }}"
             - name: "MAVE_FILE"
               value: "{{ .Values.MAVE_FILE }}"
             - name: "PATH_JKS"
               value: "{{ .Values.PATH_JKS }}"
-            - name: "UPDATE_TABLES"
-              value: "{{ .Values.UPDATE_TABLES }}"
+            - name: "SFTP_PER_POLL"
+              value: "{{ .Values.SFTP_PER_POLL }}"
+            - name: "SFTP_TIME_OUT"
+              value: "{{ .Values.SFTP_TIME_OUT }}"
+            - name: "AMQP_HOST"
+              value: "{{ .Values.AMQP_HOST }}" 
+            - name: "SQL_PRIVATE_IP"
+              value: "{{ .Values.SQL_PRIVATE_IP }}"
+            - name: "SQL_HOST"
+              value: "{{ .Values.SQL_HOST }}"
+            - name: "NEXTAUTH_URL"
+              value: "{{ .Values.NEXTAUTH_URL }}" 
             #- name: "API_JAVA_OPTION"
             #  value: "{{ .Values.API_JAVA_OPTION }}"
                   

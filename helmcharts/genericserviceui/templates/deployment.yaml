@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "genericserviceui.fullname" . }}
+  labels:
+    {{- include "genericserviceui.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "genericserviceui.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: genericserviceui
+        {{- include "genericserviceui.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: "NODE_ENV"
+              value: "{{ .Values.NODE_ENV }}"
+            - name: "NEXTAUTH_URL"
+              value: "{{ .Values.NEXTAUTH_URL }}"
+            - name: "NEXTAUTH_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginNextAuthSecret }}
+            - name: "API_ENDPOINT"
+              value: "{{ .Values.API_ENDPOINT }}"
+            - name: "GOOGLE_CLIENT_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginSecretGoogleId_Id }}
+            - name: "GOOGLE_CLIENT_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginSecretGoogleId_Secret }}
+            - name: "GITHUB_CLIENT_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginSecretGitHubId_Id }}
+            - name: "GITHUB_CLIENT_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginSecretGitHubId_Secret }}
+            - name: "EXPIRE_TOKEN"
+              value: "{{ .Values.EXPIRE_TOKEN }}"
+            - name: "EXPIRE_SESSION"
+              value: "{{ .Values.EXPIRE_SESSION }}"
+            - name: "JWT_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginJwt_SECRET }}
+            - name: "AUTH_DEBUG"
+              value: "{{ .Values.AUTH_DEBUG }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

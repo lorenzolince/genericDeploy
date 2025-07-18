@@ -1,0 +1,63 @@
+
+replicaCount: 1
+
+image:
+  repository: registry.llince.com/generate-service-ui
+  tag: latest
+  pullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "false"
+
+  hosts:
+    - host: genericserviceui.com
+      paths:
+        - /(.*)
+
+controller:
+  config:
+    sslRedirect: "false"
+    forceSslRedirect: "false"
+    useForwardedHeaders: "false"
+
+
+resources:
+
+  limits:
+    cpu: 500m
+    memory: 1024Mi
+  requests:
+    cpu: 300m
+    memory: 768Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+NODE_ENV: production
+API_ENDPOINT: http://generatebackend-genericservice
+NEXTAUTH_URL: http://genericserviceui.com
+LoginSecret_Name: cloud-login
+LoginSecretGoogleId_Id: G_CLIENT_ID
+LoginSecretGoogleId_Secret: G_CLIENT_SECRET
+LoginSecretGitHubId_Id: HUB_CLIENT_ID
+LoginSecretGitHubId_Secret: HUB_CLIENT_SECRET
+LoginNextAuthSecret: NEXTAUTH_SECRET
+LoginJwt_SECRET: JWT_SECRET
+EXPIRE_TOKEN: 60
+EXPIRE_SESSION: 60
+AUTH_DEGUG: true
