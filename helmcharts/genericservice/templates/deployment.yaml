@@ -51,12 +51,25 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.LoginSecret_Name }}
                   key: {{ .Values.LoginSecretSftp_Key }}
-            - name: "SFTP_USERNAME"
-              value: "{{ .Values.SFTP_USERNAME }}"
             - name: "SFTP_REMOTE_PATH"
               value: "{{ .Values.SFTP_REMOTE_PATH }}"
             - name: "SFTP_DELAY"
               value: "{{ .Values.SFTP_DELAY }}"
+            - name: "AMQP_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginUserRabbitMq_Key }}
+            - name: "AMQP_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginPassRabbitMq_Key }}
+            - name: "ADMIN_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginAdminPassLiquibase_Key }}
             - name: "MAVE_FILE"
               value: "{{ .Values.MAVE_FILE }}"
             - name: "PATH_JKS"

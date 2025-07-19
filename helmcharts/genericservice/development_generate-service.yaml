@@ -58,23 +58,23 @@ tolerations: []
 
 affinity: {}
 
-DB_URL: jdbc:postgresql://database.sql.com:5432/generate_service
-AMQP_HOST: 192.168.0.212
-SFTP_HOST: 192.168.0.212
+DB_URL: jdbc:postgresql://gs.server.com:5432/generate_service
+AMQP_HOST: gs.server.com
+SFTP_HOST: gs.server.com
 LoginSecret_Name: cloud-login
 LoginSecretSftp_Key: SFTP_KEY
-SFTP_USERNAME: internal
+LoginAdminPassLiquibase_Key: ADMIN_PASSWORD
+LoginUserRabbitMq_Key: AMQ_USER
+LoginPassRabbitMq_Key: AMQ_PASSWORD
 SFTP_REMOTE_PATH: ./files/compile
 SFTP_DELAY: 1000
 SFTP_PER_POLL: 10
 SFTP_TIME_OUT: 5000
 MAVE_FILE: mvn
 PATH_JKS: /app/jks/llince.jks
-SQL_PRIVATE_IP: 192.168.0.212
-SQL_HOST: database.sql.com
-LIQUIBASE_RUN: false
+SQL_PRIVATE_IP: 192.168.0.150
+SQL_HOST: gs.server.com
+LIQUIBASE_RUN: true
 EXPIRE_TOKEN : 60
-ADMIN_PASSWORD: zaq$mko123
-ADMIN_MAIL: admin@generate.service.com
 NEXTAUTH_URL: http://genericserviceui
 
