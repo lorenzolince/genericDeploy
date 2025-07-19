@@ -14,10 +14,10 @@ spec:
       labels:
         {{- include "genericservice.selectorLabels" . | nindent 8 }}
     spec:
-      hostAliases:
-        - ip: "{{ .Values.SQL_PRIVATE_IP }}"
-          hostnames:
-          - "{{ .Values.SQL_HOST }}"
+    #  hostAliases:
+    #    - ip: "{{ .Values.SQL_PRIVATE_IP }}"
+    #      hostnames:
+    #      - "{{ .Values.SQL_HOST }}"
       volumes:
       - name: generateservice-mvn
         persistentVolumeClaim:
@@ -43,9 +43,15 @@ spec:
           {{- end }}   
           env:
             - name: "DB_URL"
-              value: "{{ .Values.DB_URL }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginDbUrl_Key }}
             - name: "SFTP_HOST"
-              value: "{{ .Values.SFTP_HOST }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginSftpHost_Key }}
             - name: "SFTP_KEY"
               valueFrom:
                 secretKeyRef:
@@ -79,17 +85,16 @@ spec:
             - name: "SFTP_TIME_OUT"
               value: "{{ .Values.SFTP_TIME_OUT }}"
             - name: "AMQP_HOST"
-              value: "{{ .Values.AMQP_HOST }}" 
-            - name: "SQL_PRIVATE_IP"
-              value: "{{ .Values.SQL_PRIVATE_IP }}"
-            - name: "SQL_HOST"
-              value: "{{ .Values.SQL_HOST }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.LoginSecret_Name }}
+                  key: {{ .Values.LoginAmqpHost_Key }} 
             - name: "NEXTAUTH_URL"
               value: "{{ .Values.NEXTAUTH_URL }}" 
             - name: "LIQUIBASE_RUN"
               value: "{{ .Values.LIQUIBASE_RUN }}" 
-            #- name: "API_JAVA_OPTION"
-            #  value: "{{ .Values.API_JAVA_OPTION }}"
+            - name: "API_JAVA_OPTION"
+              value: "{{ .Values.API_JAVA_OPTION }}"
                   
 
           resources:
