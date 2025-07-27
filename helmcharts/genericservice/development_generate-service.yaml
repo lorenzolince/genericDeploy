@@ -76,4 +76,5 @@ LIQUIBASE_RUN: true
 EXPIRE_TOKEN : 60
 NEXTAUTH_URL: http://genericserviceui
 API_JAVA_OPTION: -Xss512k -Xms512m -Xmx1g
+MAVEN_OPTS: -Dmaven.repo.local=/app/.m2/repository -Xss512k -Xms512m -Xmx1g
 

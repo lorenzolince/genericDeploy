@@ -95,6 +95,8 @@ spec:
               value: "{{ .Values.LIQUIBASE_RUN }}" 
             - name: "API_JAVA_OPTION"
               value: "{{ .Values.API_JAVA_OPTION }}"
+            - name: "MAVEN_OPTS"
+              value: "{{ .Values.MAVEN_OPTS }}"
                   
 
           resources:
