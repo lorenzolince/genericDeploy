@@ -48,10 +48,16 @@ tolerations: []
 
 affinity: {}
 
-NODE_ENV: test
-NEXTAUTH_URL: https://acawb.lincetechnology.net/
-NEXTAUTH_SECRET: emFxJG1rbzEy
-AUTH_ENABLED: true
-API_ENDPOINT_JAVA: http://academoservice/api
-JWT_SECRET: shark-some-hedgehogs-are-not-so-cuddly-ow-2020
-AUTH_DEGUG: false
+NODE_ENV: production
+API_ENDPOINT: http://academoservice
+NEXTAUTH_URL: https://calculate-wb.com
+LoginSecret_Name: cloud-login
+LoginSecretGoogleId_Id: G_CLIENT_ID
+LoginSecretGoogleId_Secret: G_CLIENT_SECRET
+LoginSecretGitHubId_Id: HUB_CLIENT_ID
+LoginSecretGitHubId_Secret: HUB_CLIENT_SECRET
+LoginNextAuthSecret: NEXTAUTH_SECRET
+LoginJwt_SECRET: JWT_SECRET
+EXPIRE_TOKEN: 60
+EXPIRE_SESSION: 60
+AUTH_DEBUG: false
