@@ -97,7 +97,30 @@ spec:
               value: "{{ .Values.API_JAVA_OPTION }}"
             - name: "MAVEN_OPTS"
               value: "{{ .Values.MAVEN_OPTS }}"
-                  
-
+            - name: "PAYPAL_CLIENT_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.paipalSecret_Name }}
+                  key: {{ .Values.paipalClientId_Key }}
+            - name: "PAYPAL_SECRET_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.paipalSecret_Name }}
+                  key: {{ .Values.paipalSecret_Key }}
+            - name: "PAYPAL_WEBHOOK_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.paipalSecret_Name }}
+                  key: {{ .Values.paipalWebHookId_Key }}
+            - name: "PAYPAL_BASE_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.paipalSecret_Name }}
+                  key: {{ .Values.paipalBaseUrl_Key }}
+            - name: "PAYPAL_EMAIL_BUSINESS"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.paipalSecret_Name }}
+                  key: {{ .Values.paipalEmailBusiness_Key }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

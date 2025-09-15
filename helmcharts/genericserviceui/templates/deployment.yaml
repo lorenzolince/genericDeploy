@@ -66,5 +66,10 @@ spec:
                   key: {{ .Values.LoginJwt_SECRET }}
             - name: "AUTH_DEBUG"
               value: "{{ .Values.AUTH_DEBUG }}"
+            - name: "PAYPAL_CLIENT_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.paipalSecret_Name }}
+                  key: {{ .Values.paipalClientId_Key }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

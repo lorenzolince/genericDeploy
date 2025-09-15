@@ -61,3 +61,5 @@ LoginJwt_SECRET: JWT_SECRET
 EXPIRE_TOKEN: 60
 EXPIRE_SESSION: 60
 AUTH_DEBUG: false
+paipalSecret_Name: paypal
+paipalClientId_Key: PAYPAL_CLIENT_ID
