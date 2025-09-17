@@ -63,3 +63,4 @@ EXPIRE_SESSION: 60
 AUTH_DEBUG: false
 paipalSecret_Name: paypal
 paipalClientId_Key: PAYPAL_CLIENT_ID
+NODE_OPTIONS: --max-old-space-size=4096

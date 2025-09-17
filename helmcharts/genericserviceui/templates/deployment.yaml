@@ -26,6 +26,8 @@ spec:
           env:
             - name: "NODE_ENV"
               value: "{{ .Values.NODE_ENV }}"
+            - name: "NODE_OPTIONS"
+              value: "{{ .Values.NODE_OPTIONS }}"
             - name: "NEXTAUTH_URL"
               value: "{{ .Values.NEXTAUTH_URL }}"
             - name: "NEXTAUTH_SECRET"
