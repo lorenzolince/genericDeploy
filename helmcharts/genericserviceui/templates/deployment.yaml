@@ -37,6 +37,8 @@ spec:
                   key: {{ .Values.LoginNextAuthSecret }}
             - name: "API_ENDPOINT"
               value: "{{ .Values.API_ENDPOINT }}"
+            - name: "PUBLIC_API_ENDPOINT"
+              value: "{{ .Values.PUBLIC_API_ENDPOINT }}"
             - name: "GOOGLE_CLIENT_ID"
               valueFrom:
                 secretKeyRef:
