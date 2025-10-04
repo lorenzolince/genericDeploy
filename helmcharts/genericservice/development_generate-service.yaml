@@ -9,8 +9,10 @@ image:
   tag: latest
   pullPolicy: Always
 
-#imagePullSecrets:
-  #- name : loparegistry
+
+
+imagePullSecrets:
+  - name: nexus-registry
 nameOverride: ""
 fullnameOverride: ""
 

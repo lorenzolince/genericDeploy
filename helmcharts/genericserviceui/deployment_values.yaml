@@ -6,6 +6,8 @@ image:
   tag: latest
   pullPolicy: Always
 
+imagePullSecrets:
+  - name: nexus-registry
 nameOverride: ""
 fullnameOverride: ""
 
