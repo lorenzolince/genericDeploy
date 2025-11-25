@@ -14,10 +14,14 @@ spec:
       labels:
         {{- include "genericservice.selectorLabels" . | nindent 8 }}
     spec:
-    #  hostAliases:
-    #    - ip: "{{ .Values.SQL_PRIVATE_IP }}"
-    #      hostnames:
-    #      - "{{ .Values.SQL_HOST }}"
+      hostAliases:
+        - ip: "192.168.0.38"
+          hostnames:
+          - "db.oracle.lince.com"
+          - "db.sqlserver.lince.com"
+          - "db.mysql.lince.com"
+          - "db.mariadb.lince.com"
+          - "db.postgresql.lince.com"
       volumes:
       - name: generateservice-mvn
         persistentVolumeClaim:
