@@ -22,6 +22,10 @@ spec:
           - "db.mysql.lince.com"
           - "db.mariadb.lince.com"
           - "db.postgresql.lince.com"
+          - "test.lince.com"
+        - ip: "192.168.0.7"
+          hostnames:
+          - "jenkins.lince.com"
       volumes:
       - name: generateservice-mvn
         persistentVolumeClaim:
