@@ -1,0 +1,24 @@
+{{- if .Values.persistence.enabled }}
+{{- range .Values.persistence.volumes }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .name | quote }}
+  labels:
+    project: {{ $.Values.persistence.projectName }}
+spec:
+  storageClassName: {{ $.Values.persistence.storageClass }}
+  accessModes:
+{{- if .accessModes }}
+{{- range .accessModes }}
+    - {{ . }}
+{{- end }}
+{{- else }}
+    - ReadWriteMany
+{{- end }}
+  resources:
+    requests:
+      storage: {{ default "10Gi" .size }}
+---
+{{- end }}
+{{- end }}

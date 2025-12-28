@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+{{- $root := . }}
+metadata:
+  name: {{ printf "%s-%s" (include "llince.fullname" $root) .Values.version }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ printf "%s-%s" (include "llince.fullname" $root) .Values.version }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-%s" (include "llince.fullname" $root) .Values.version }}
+      annotations:
+        app.kubernetes.io/name: {{ printf "%s-%s" (include "llince.fullname" $root) .Values.version }}
+        app.kubernetes.io/instance: {{ printf "%s-%s" (include "llince.fullname" $root) .Values.version }}
+        app.kubernetes.io/component: {{ .Values.component }}
+        app.kubernetes.io/part-of: {{ printf "%s-%s-services" (include "llince.fullname" $root) .Values.version }}
+
+    spec:
+      {{- if and .Values.hostAliases .Values.hostAliases.enabled }}
+      hostAliases:
+      {{- range .Values.hostAliases.items }}
+      - ip: {{ .ip | quote }}
+        hostnames:
+        {{- range .hostnames }}
+          - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      {{- end }}
+
+      {{- if or .Values.persistence.enabled .Values.emptyDirVolumes.enabled }}
+      volumes:
+        {{- if and .Values.persistence.enabled .Values.persistence.volumes }}
+        {{- range .Values.persistence.volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .name | quote }}
+        {{- end }}
+        {{- end }}
+
+        {{- if and .Values.emptyDirVolumes.enabled .Values.emptyDirVolumes.volumes }}
+        {{- range .Values.emptyDirVolumes.volumes }}
+        - name: {{ .name }}
+          emptyDir:
+            {{- if .medium }}
+            medium: {{ .medium }}
+            sizeLimit: {{ default "2Gi" .size }}
+            {{- end }}
+        {{- end }}
+        {{- end }}
+      {{- end }}
+
+      {{- if .Values.imagePullSecrets.enabled }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets.name }}
+      {{- end }}
+
+      containers:
+        - name: {{ printf "app-container-%s-%s" (include "llince.fullname" $root) .Values.version }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - name: http
+              containerPort: 8080
+
+          {{- if or .Values.persistence.enabled .Values.emptyDirVolumes.enabled }}
+          volumeMounts:
+            {{- if and .Values.persistence.enabled .Values.persistence.volumes }}
+            {{- range .Values.persistence.volumes }}
+            - name: {{ .name }}
+              mountPath: {{ .path | quote }}
+            {{- end }}
+            {{- end }}
+
+            {{- if and .Values.emptyDirVolumes.enabled .Values.emptyDirVolumes.volumes }}
+            {{- range .Values.emptyDirVolumes.volumes }}
+            - name: {{ .name }}
+              mountPath: {{ .path | quote }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
+
+          env:
+            {{- if .Values.envData }}
+            {{- range $key, $value := .Values.envData }}
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- end }}
+
+            {{- if .Values.secretData }}
+            {{- range $key, $_ := .Values.secretData }}
+            - name: {{ $key | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ printf "%s-secret" (include "llince.fullname" $root) }}
+                  key: {{ $key | quote }}
+            {{- end }}
+            {{- end }}
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
