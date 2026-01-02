@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: {{ include "llince.fullname" . }}
   labels:
-    app: llince
+    app: {{ printf "%s-%s" (include "llince.fullname" .) .Values.version }}
     {{- include "llince.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
@@ -14,5 +14,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "llince.selectorLabels" . | nindent 4 }}
+    app: {{ printf "%s-%s" (include "llince.fullname" .) .Values.version }}
 {{- end }}

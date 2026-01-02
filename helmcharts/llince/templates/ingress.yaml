@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled }}
-{{- $fullName := include "llince.fullname" . }}
+{{- $fullName := printf "%s-%s" (include "llince.fullname" .) .Values.version }}
 {{- $svcPort := .Values.service.port }}
 {{- $pathType := default "ImplementationSpecific" .Values.ingress.pathType }}
 
