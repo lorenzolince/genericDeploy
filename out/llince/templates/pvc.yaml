@@ -1,0 +1,15 @@
+---
+# Source: llince/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "generateservice-mvn"
+  labels:
+    project: backend
+spec:
+  storageClassName: nfs-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi

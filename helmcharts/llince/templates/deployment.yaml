@@ -65,7 +65,7 @@ spec:
 
           ports:
             - name: http
-              containerPort: "{{ .Values.image.containerPort }}"
+              containerPort: {{ .Values.image.containerPort }}
 
           {{- if or .Values.persistence.enabled .Values.emptyDirVolumes.enabled }}
           volumeMounts:

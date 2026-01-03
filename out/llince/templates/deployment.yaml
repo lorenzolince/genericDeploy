@@ -1,0 +1,83 @@
+---
+# Source: llince/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: generatebackend-v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: generatebackend-v1
+
+  template:
+    metadata:
+      labels:
+        app: generatebackend-v1
+      annotations:
+        app.kubernetes.io/name: generatebackend-v1
+        app.kubernetes.io/instance: generatebackend-v1
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/part-of: generatebackend-v1-services
+
+    spec:
+      hostAliases:
+      - ip: "192.168.0.38"
+        hostnames:
+          - "db.oracle.lince.com"
+          - "db.sqlserver.lince.com"
+          - "db.mysql.lince.com"
+          - "db.mariadb.lince.com"
+          - "db.postgresql.lince.com"
+          - "test.lince.com"
+      - ip: "192.168.0.7"
+        hostnames:
+          - "jenkins.lince.com"
+      volumes:
+        - name: generateservice-mvn
+          persistentVolumeClaim:
+            claimName: "generateservice-mvn"
+        - name: compile-ram
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+
+      containers:
+        - name: app-container-generatebackend-v1
+          image: "registry.llince.com/generate-service-backend:5"
+          imagePullPolicy: Always
+
+          ports:
+            - name: http
+              containerPort: "8080"
+          volumeMounts:
+            - name: generateservice-mvn
+              mountPath: "/app/.m2"
+            - name: compile-ram
+              mountPath: "/app/compile"
+
+          env:
+            - name: "API_JAVA_OPTION"
+              value: "-Xms1g -Xmx1g -Xss512k -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+AlwaysPreTouch -XX:+ParallelRefProcEnabled -XX:InitiatingHeapOccupancyPercent=30 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heap-dump.hprof -Duser.timezone=UTC"
+            - name: "LIQUIBASE_RUN"
+              value: "false"
+            - name: "MAVEN_OPTS"
+              value: "-Dmaven.repo.local=/app/.m2/repository -Xss512k -Xms512m -Xmx1g"
+            - name: "NEXTAUTH_URL"
+              value: "http://genericserviceui"
+            - name: "SFTP_DELAY"
+              value: "5000"
+            - name: "SFTP_PER_POLL"
+              value: "10"
+            - name: "SFTP_REMOTE_PATH"
+              value: "./files/compile"
+            - name: "SFTP_TIME_OUT"
+              value: "30000"
+
+          resources:
+            limits:
+              cpu: 1500m
+              memory: 2Gi
+            requests:
+              cpu: 150m
+              memory: 1Gi
