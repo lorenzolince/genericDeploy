@@ -11,6 +11,7 @@ image:
   pullPolicy: Always
 
 imagePullSecrets:
+  create: false   
   enabled: false
   name: nexus-registry
   registry: ""
