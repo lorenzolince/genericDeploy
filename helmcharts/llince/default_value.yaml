@@ -7,6 +7,7 @@ replicaCount: 1
 image:
   repository: registry.com
   tag: latest
+  containerPort: 8080
   pullPolicy: Always
 
 imagePullSecrets:
@@ -23,9 +24,6 @@ service:
   enabled: false
   type: ClusterIP
   port: 80
-
-volumes:
-  enabled: true
 
 persistence:
   enabled: false
